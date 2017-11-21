@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="container">
-        <aside>Note List</aside>
-        <section>
-          <div id="editor" contenteditable="true"></div>
-        </section>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div className="container">
+    <aside>Note List</aside>
+    <section>
+      <div id="editor" contentEditable="true" />
+    </section>
+  </div>
+);
 
 export default App;

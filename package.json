@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17"
@@ -11,6 +12,75 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb",
+      "prettier",
+      "prettier/react"
+    ],
+    "env": {
+      "browser": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6
+    },
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "react/no-string-refs": "off",
+      "react/no-unused-prop-types": "off",
+      "import/no-unresolved": 0,
+      "import/extensions": 0,
+      "import/no-extraneous-dependencies": "off",
+      "no-console": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "parser": "flow",
+          "trailingComma": "all"
+        }
+      ],
+      "react/jsx-wrap-multilines": 0,
+      "arrow-parens": [
+        "error",
+        "as-needed"
+      ],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ]
+    },
+    "globals": {
+      "fetch": true
+    }
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.8.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-react": "^7.5.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^5.0.0",
+    "prettier": "^1.8.2"
   }
 }
