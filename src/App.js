@@ -10,17 +10,29 @@ const App = props => (
       <Notes notes={props.notes} />
     </aside>
     <section>
-      <div id="editor" contentEditable="true" />
+      <div id="editor">
+        <textarea type="text" defaultValue={props.currentNote.text} />
+      </div>
     </section>
   </div>
 );
 
 App.defaultProps = {
   notes: PropTypes.arrayOf(PropTypes.object),
+  currentNote: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    text: PropTypes.string,
+  }),
 };
 
 App.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
+  currentNote: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    text: PropTypes.string,
+  }),
 };
 
 export default App;

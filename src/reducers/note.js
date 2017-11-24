@@ -4,6 +4,7 @@ const initState = {
     { id: 1, title: 'note 1', text: 'this is text for note 1' },
     { id: 2, title: 'note 2', text: 'this is text for note 2' },
   ],
+  currentNote: { id: 2, title: 'note 2', text: 'this is text for note 2' },
 };
 
 export default (state = initState, action) => {

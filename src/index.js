@@ -5,7 +5,12 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import store from './store';
 
-const state = store.getState();
+const render = () => {
+  const state = store.getState();
+  const app = <App notes={state.notes} currentNote={state.currentNote} />;
+  ReactDOM.render(app, document.getElementById('root'));
+};
+render();
 
-ReactDOM.render(<App {...state} />, document.getElementById('root'));
+store.subscribe(render);
 registerServiceWorker();
