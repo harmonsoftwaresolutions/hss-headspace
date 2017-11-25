@@ -1,3 +1,5 @@
+import { EditorState } from 'draft-js';
+
 const initState = {
   notes: [
     { id: 0, title: 'note 0', text: 'this is text for note 0' },
@@ -5,6 +7,7 @@ const initState = {
     { id: 2, title: 'note 2', text: 'this is text for note 2' },
   ],
   currentNote: { id: 2, title: 'note 2', text: 'this is text for note 2' },
+  editorState: EditorState.createEmpty(),
 };
 
 export default (state = initState, action) => {
