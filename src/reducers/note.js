@@ -10,10 +10,17 @@ const initState = {
   editorState: EditorState.createEmpty(),
 };
 
-export default (state = initState, action) => {
-  switch (action.type) {
-    case 'NOTE_ADD':
-      return { ...state, notes: [...state.notes, action.payload] };
+const NOTE_ADD = 'NOTE_ADD';
+const EDITOR_UPDATE = 'EDITOR_UPDATE';
+
+export const updateEditor = val => ({ type: EDITOR_UPDATE, payload: val });
+
+export default (state = initState, { type, payload }) => {
+  switch (type) {
+    case NOTE_ADD:
+      return { ...state, notes: [...state.notes, payload] };
+    case EDITOR_UPDATE:
+      return { ...state, editorState: payload };
     default:
       return state;
   }

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Editor } from 'draft-js';
+import 'draft-js/dist/Draft.css';
 import './App.css';
 import Notes from './components/NoteList';
 
 const App = props => {
-  const { changeCurrent, notes, editorState } = props;
+  const { updateEditor, notes, editorState } = props;
   return (
     <div className="container">
       <aside>
@@ -14,7 +15,7 @@ const App = props => {
       </aside>
       <section>
         <div id="editor">
-          <Editor editorState={editorState} onChange={changeCurrent} />
+          <Editor editorState={editorState} onChange={updateEditor} />
         </div>
       </section>
     </div>
@@ -29,7 +30,7 @@ App.defaultProps = {
     text: PropTypes.string,
   }),
   editorState: PropTypes.shape({}),
-  changeCurrent: PropTypes.func,
+  updateEditor: PropTypes.func,
 };
 
 App.propTypes = {
@@ -40,7 +41,7 @@ App.propTypes = {
     text: PropTypes.string,
   }),
   editorState: PropTypes.shape({}),
-  changeCurrent: PropTypes.func,
+  updateEditor: PropTypes.func,
 };
 
 export default App;
