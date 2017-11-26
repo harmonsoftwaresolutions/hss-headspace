@@ -65,7 +65,7 @@
         {
           "singleQuote": true,
           "parser": "flow",
-          "trailingComma": "all"
+          "trailingComma": "es5"
         }
       ],
       "react/jsx-wrap-multilines": 0,
