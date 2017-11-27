@@ -15,3 +15,7 @@
   background-color: lightgrey;
 }
 
+ul {
+ list-style-type: none;
+}
+
