@@ -1,12 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import './App.css';
+import { updateEditor } from './reducers/note';
 import Notes from './components/NoteList';
 
 const App = props => {
-  const { updateEditor, notes, editorState } = props;
+  const { notes, editorState } = props;
   return (
     <div className="container">
       <aside>
@@ -15,7 +17,7 @@ const App = props => {
       </aside>
       <section>
         <div id="editor">
-          <Editor editorState={editorState} onChange={updateEditor} />
+          <Editor editorState={editorState} onChange={props.updateEditor} />
         </div>
       </section>
     </div>
@@ -44,4 +46,4 @@ App.propTypes = {
   updateEditor: PropTypes.func,
 };
 
-export default App;
+export default connect(state => state, { updateEditor })(App);
