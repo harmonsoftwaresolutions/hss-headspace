@@ -19,3 +19,7 @@ ul {
  list-style-type: none;
 }
 
+li button {
+  cursor: pointer;
+  cursor: hand;
+}
