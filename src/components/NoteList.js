@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NoteItem = ({ text }) => <li>{text}</li>;
+const NoteItem = ({ title }) => (
+  <li>
+    <button>{title}</button>
+  </li>
+);
 
 NoteItem.propTypes = {
   id: PropTypes.number,
-  text: PropTypes.string,
+  title: PropTypes.string,
 };
 
 NoteItem.defaultProps = {
   id: PropTypes.number,
-  text: PropTypes.string,
+  title: PropTypes.string,
 };
 
 const Notes = props => (
