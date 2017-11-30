@@ -17,12 +17,14 @@
   "dependencies": {
     "draft-js": "^0.10.4",
     "font-awesome": "^4.7.0",
+    "json-server": "^0.12.1",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,7 +32,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "dev-server": "json-server -p 8080 db.json"
   },
   "lint-staged": {
     "*.js": [
@@ -48,7 +51,7 @@
       "browser": true
     },
     "parserOptions": {
-      "ecmaVersion": 6
+      "ecmaVersion": 2017
     },
     "plugins": [
       "prettier"
@@ -65,7 +68,8 @@
         {
           "singleQuote": true,
           "parser": "flow",
-          "trailingComma": "es5"
+          "trailingComma": "es5",
+          "bracketSpacing": true
         }
       ],
       "react/jsx-wrap-multilines": 0,
