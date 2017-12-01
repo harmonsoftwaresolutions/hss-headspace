@@ -5,15 +5,15 @@ import { Editor } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import './App.css';
 import { updateEditor } from './reducers/note';
-import Notes from './components/NoteList';
+import NoteList from './components/NoteList';
 
 const App = props => {
-  const { notes, editorState } = props;
+  const { editorState } = props;
   return (
     <div className="container">
       <aside>
         <h3>Note List</h3>
-        <Notes notes={notes} />
+        <NoteList />
       </aside>
       <section>
         <div id="editor">
@@ -25,23 +25,11 @@ const App = props => {
 };
 
 App.defaultProps = {
-  notes: PropTypes.arrayOf(PropTypes.shape({})),
-  currentNote: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    text: PropTypes.string,
-  }),
   editorState: PropTypes.shape({}),
   updateEditor: PropTypes.func,
 };
 
 App.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.shape({})),
-  currentNote: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    text: PropTypes.string,
-  }),
   editorState: PropTypes.shape({}),
   updateEditor: PropTypes.func,
 };

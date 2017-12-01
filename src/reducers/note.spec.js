@@ -21,6 +21,7 @@ describe('Note reducer', () => {
         { id: 2, title: 'note 2', text: 'this is text for note 2' },
         { id: 3, title: 'note 3', text: 'this is text for note 3' },
       ],
+      currentNote: '',
     };
     const payload = { id: 3, title: 'note 3', text: 'this is text for note 3' };
     const action = { type: 'NOTE_ADD', payload };
