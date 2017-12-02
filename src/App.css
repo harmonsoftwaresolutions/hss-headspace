@@ -1,4 +1,5 @@
 .container {
+  padding-top: 35px;
   display: grid;
   grid-gap: 5px;
   height: 100vh;
@@ -22,4 +23,15 @@ ul {
 li button {
   cursor: pointer;
   cursor: hand;
+}
+
+.message {
+  background-color: #61DAF8;
+  color: white;
+  border: solid 1px #61DAF8;
+  position: absolute;
+  text-align: center;
+  width: 200px;
+  left: 50%;
+  margin-left: -100px;
 }

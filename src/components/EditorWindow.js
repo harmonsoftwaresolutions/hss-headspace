@@ -20,6 +20,6 @@ EditorWindow.propTypes = {
   updateEditor: PropTypes.func,
 };
 
-export default connect(state => ({ editorState: state.editorState }), {
+export default connect(state => ({ editorState: state.note.editorState }), {
   updateEditor,
 })(EditorWindow);

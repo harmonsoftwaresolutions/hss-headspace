@@ -1,5 +1,6 @@
 import { EditorState } from 'draft-js';
 import { getNotes, createNote } from '../lib/noteServices';
+import { showMessage } from './message';
 
 const initState = {
   notes: [],
@@ -7,9 +8,9 @@ const initState = {
   editorState: EditorState.createEmpty(),
 };
 
+export const NOTE_ADD = 'NOTE_ADD';
+export const NOTES_LOAD = 'NOTES_LOAD';
 const EDITOR_UPDATE = 'EDITOR_UPDATE';
-const NOTES_LOAD = 'NOTES_LOAD';
-const NOTE_ADD = 'NOTE_ADD';
 const CURRENT_UPDATE = 'CURRENT_UPDATE';
 
 export const updateEditor = val => ({ type: EDITOR_UPDATE, payload: val });
@@ -18,10 +19,12 @@ export const addNote = note => ({ type: NOTE_ADD, payload: note });
 export const updateCurrent = val => ({ type: CURRENT_UPDATE, payload: val });
 
 export const fetchNotes = () => async dispatch => {
+  dispatch(showMessage('Loading Notes'));
   const res = await getNotes();
   dispatch(loadNotes(res));
 };
 export const saveNote = title => async dispatch => {
+  dispatch(showMessage('Saving Note'));
   const res = await createNote(title);
   dispatch(addNote(res));
 };
