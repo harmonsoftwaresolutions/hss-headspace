@@ -76,7 +76,7 @@ NoteList.defaultProps = {
 };
 
 export default connect(
-  state => ({ notes: state.notes, currentNote: state.currentNote }),
+  state => ({ notes: state.note.notes, currentNote: state.note.currentNote }),
   {
     updateCurrent,
     fetchNotes,

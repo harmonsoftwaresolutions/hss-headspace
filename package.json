@@ -93,5 +93,8 @@
       "test": true,
       "expect": true
     }
+  },
+  "optionalDependencies": {
+    "redux-devtools-extension": "^2.13.2"
   }
 }
