@@ -9,7 +9,7 @@ import { showMessage } from './message';
 
 const initState = {
   notes: [],
-  currentNote: '',
+  inputNote: '',
   editorState: EditorState.createEmpty(),
 };
 
@@ -19,13 +19,16 @@ export const NOTES_LOAD = 'NOTES_LOAD';
 export const NOTE_REPLACE = 'NOTE_REPLACE';
 export const NOTE_DELETE = 'NOTE_DELETE';
 const EDITOR_UPDATE = 'EDITOR_UPDATE';
-const CURRENT_UPDATE = 'CURRENT_UPDATE';
+const INPUT_NOTE_UPDATE = 'INPUT_NOTE_UPDATE';
 
 // ACTION CREATORS
 export const updateEditor = val => ({ type: EDITOR_UPDATE, payload: val });
 export const loadNotes = notes => ({ type: NOTES_LOAD, payload: notes });
 export const addNote = note => ({ type: NOTE_ADD, payload: note });
-export const updateCurrent = val => ({ type: CURRENT_UPDATE, payload: val });
+export const updateInputNote = title => ({
+  type: INPUT_NOTE_UPDATE,
+  payload: title,
+});
 export const replaceNote = note => ({ type: NOTE_REPLACE, payload: note });
 export const removeNote = note => ({ type: NOTE_DELETE, payload: note });
 
@@ -34,6 +37,7 @@ export const fetchNotes = () => async dispatch => {
   const res = await getNotes();
   dispatch(loadNotes(res));
 };
+
 export const saveNote = title => async dispatch => {
   dispatch(showMessage('Saving Note'));
   const res = await createNote(title);
@@ -61,9 +65,9 @@ export default (state = initState, { type, payload }) => {
     case NOTES_LOAD:
       return { ...state, notes: payload };
     case NOTE_ADD:
-      return { ...state, currentNote: '', notes: [...state.notes, payload] };
-    case CURRENT_UPDATE:
-      return { ...state, currentNote: payload };
+      return { ...state, inputNote: '', notes: [...state.notes, payload] };
+    case INPUT_NOTE_UPDATE:
+      return { ...state, inputNote: payload };
     case EDITOR_UPDATE:
       return { ...state, editorState: payload };
     case NOTE_REPLACE:
