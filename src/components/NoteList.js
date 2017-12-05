@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {
   fetchNotes,
   saveNote,
-  updateCurrent,
+  updateInputNote,
   toggleNote,
   deleteNote,
 } from '../reducers/note';
@@ -22,24 +22,24 @@ class NoteList extends Component {
   }
 
   handleInputChange(evt) {
-    const val = evt.target.value;
-    this.props.updateCurrent(val);
+    const text = evt.target.value;
+    this.props.updateInputNote(text);
   }
 
   handleSubmit(evt) {
     evt.preventDefault();
-    this.props.saveNote(this.props.currentNote);
+    this.props.saveNote(this.props.inputNote);
   }
 
   render() {
-    const { currentNote } = this.props;
+    const { inputNote } = this.props;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
             onChange={this.handleInputChange}
-            value={currentNote}
+            value={inputNote}
           />
         </form>
         <ul>
@@ -60,8 +60,8 @@ class NoteList extends Component {
 NoteList.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   fetchNotes: PropTypes.func,
-  currentNote: PropTypes.string,
-  updateCurrent: PropTypes.func,
+  inputNote: PropTypes.string,
+  updateInputNote: PropTypes.func,
   saveNote: PropTypes.func,
   toggleNote: PropTypes.func,
   deleteNote: PropTypes.func,
@@ -70,17 +70,17 @@ NoteList.propTypes = {
 NoteList.defaultProps = {
   notes: PropTypes.arrayOf(PropTypes.object),
   fetchNotes: PropTypes.func,
-  currentNote: PropTypes.string,
-  updateCurrent: PropTypes.func,
+  inputNote: PropTypes.string,
+  updateInputNote: PropTypes.func,
   saveNote: PropTypes.func,
   toggleNote: PropTypes.func,
   deleteNote: PropTypes.func,
 };
 
 export default connect(
-  state => ({ notes: state.note.notes, currentNote: state.note.currentNote }),
+  state => ({ notes: state.note.notes, inputNote: state.note.inputNote }),
   {
-    updateCurrent,
+    updateInputNote,
     fetchNotes,
     saveNote,
     toggleNote,
