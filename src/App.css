@@ -35,3 +35,20 @@ li button {
   left: 50%;
   margin-left: -100px;
 }
+
+span.delete-item button {
+  background: none;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+li span.delete-item {
+  visibility: hidden;
+}
+
+li:hover span.delete-item {
+  visibility: visible;
+}
