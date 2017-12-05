@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchNotes, saveNote, updateCurrent } from '../reducers/note';
-
-const NoteItem = ({ title }) => (
-  <li>
-    <button>{title}</button>
-  </li>
-);
-
-NoteItem.propTypes = {
-  id: PropTypes.number,
-  title: PropTypes.string,
-};
-
-NoteItem.defaultProps = {
-  id: PropTypes.number,
-  title: PropTypes.string,
-};
+import {
+  fetchNotes,
+  saveNote,
+  updateCurrent,
+  toggleNote,
+  deleteNote,
+} from '../reducers/note';
+import NoteItem from './Note';
 
 class NoteList extends Component {
   constructor(props) {
@@ -52,7 +43,14 @@ class NoteList extends Component {
           />
         </form>
         <ul>
-          {this.props.notes.map(note => <NoteItem key={note.id} {...note} />)}
+          {this.props.notes.map(note => (
+            <NoteItem
+              key={note.id}
+              toggleNote={this.props.toggleNote}
+              deleteNote={this.props.deleteNote}
+              {...note}
+            />
+          ))}
         </ul>
       </div>
     );
@@ -65,6 +63,8 @@ NoteList.propTypes = {
   currentNote: PropTypes.string,
   updateCurrent: PropTypes.func,
   saveNote: PropTypes.func,
+  toggleNote: PropTypes.func,
+  deleteNote: PropTypes.func,
 };
 
 NoteList.defaultProps = {
@@ -73,6 +73,8 @@ NoteList.defaultProps = {
   currentNote: PropTypes.string,
   updateCurrent: PropTypes.func,
   saveNote: PropTypes.func,
+  toggleNote: PropTypes.func,
+  deleteNote: PropTypes.func,
 };
 
 export default connect(
@@ -81,5 +83,7 @@ export default connect(
     updateCurrent,
     fetchNotes,
     saveNote,
+    toggleNote,
+    deleteNote,
   }
 )(NoteList);

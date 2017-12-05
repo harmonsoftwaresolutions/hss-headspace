@@ -1,4 +1,4 @@
-import { NOTE_ADD, NOTES_LOAD } from './note';
+import { NOTE_ADD, NOTES_LOAD, NOTE_REPLACE, NOTE_DELETE } from './note';
 
 const MESSAGE_SHOW = 'MESSAGE_SHOW';
 
@@ -11,6 +11,10 @@ export default (state = '', { type, payload }) => {
     case NOTE_ADD:
       return '';
     case NOTES_LOAD:
+      return '';
+    case NOTE_REPLACE:
+      return '';
+    case NOTE_DELETE:
       return '';
     default:
       return state;
