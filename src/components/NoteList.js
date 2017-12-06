@@ -5,7 +5,7 @@ import {
   fetchNotes,
   saveNote,
   updateInputNote,
-  toggleNote,
+  selectNote,
   deleteNote,
 } from '../reducers/note';
 import NoteItem from './Note';
@@ -46,7 +46,7 @@ class NoteList extends Component {
           {this.props.notes.map(note => (
             <NoteItem
               key={note.id}
-              toggleNote={this.props.toggleNote}
+              selectNote={this.props.selectNote}
               deleteNote={this.props.deleteNote}
               {...note}
             />
@@ -63,7 +63,7 @@ NoteList.propTypes = {
   inputNote: PropTypes.string,
   updateInputNote: PropTypes.func,
   saveNote: PropTypes.func,
-  toggleNote: PropTypes.func,
+  selectNote: PropTypes.func,
   deleteNote: PropTypes.func,
 };
 
@@ -73,17 +73,21 @@ NoteList.defaultProps = {
   inputNote: PropTypes.string,
   updateInputNote: PropTypes.func,
   saveNote: PropTypes.func,
-  toggleNote: PropTypes.func,
+  selectNote: PropTypes.func,
   deleteNote: PropTypes.func,
 };
 
 export default connect(
-  state => ({ notes: state.note.notes, inputNote: state.note.inputNote }),
+  state => ({
+    notes: state.note.notes,
+    inputNote: state.note.inputNote,
+    currentNote: state.note.currentNote,
+  }),
   {
     updateInputNote,
     fetchNotes,
     saveNote,
-    toggleNote,
+    selectNote,
     deleteNote,
   }
 )(NoteList);
