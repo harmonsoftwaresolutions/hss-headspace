@@ -1,47 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  fetchNotes,
-  saveNote,
-  updateInputNote,
-  selectNote,
-  deleteNote,
-} from '../reducers/note';
+import { fetchNotes, newNote, selectNote, deleteNote } from '../reducers/note';
 import NoteItem from './Note';
 
 class NoteList extends Component {
-  constructor(props) {
-    super(props);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
   componentDidMount() {
     this.props.fetchNotes();
   }
 
-  handleInputChange(evt) {
-    const text = evt.target.value;
-    this.props.updateInputNote(text);
-  }
-
-  handleSubmit(evt) {
-    evt.preventDefault();
-    this.props.saveNote(this.props.inputNote);
-  }
-
   render() {
-    const { inputNote } = this.props;
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            onChange={this.handleInputChange}
-            value={inputNote}
-          />
-        </form>
+        <button onClick={() => this.props.newNote()}>+</button>
         <ul>
           {this.props.notes.map(note => (
             <NoteItem
@@ -60,9 +31,7 @@ class NoteList extends Component {
 NoteList.propTypes = {
   notes: PropTypes.arrayOf(PropTypes.object),
   fetchNotes: PropTypes.func,
-  inputNote: PropTypes.string,
-  updateInputNote: PropTypes.func,
-  saveNote: PropTypes.func,
+  newNote: PropTypes.func,
   selectNote: PropTypes.func,
   deleteNote: PropTypes.func,
 };
@@ -70,9 +39,7 @@ NoteList.propTypes = {
 NoteList.defaultProps = {
   notes: PropTypes.arrayOf(PropTypes.object),
   fetchNotes: PropTypes.func,
-  inputNote: PropTypes.string,
-  updateInputNote: PropTypes.func,
-  saveNote: PropTypes.func,
+  newNote: PropTypes.func,
   selectNote: PropTypes.func,
   deleteNote: PropTypes.func,
 };
@@ -80,13 +47,11 @@ NoteList.defaultProps = {
 export default connect(
   state => ({
     notes: state.note.notes,
-    inputNote: state.note.inputNote,
     currentNote: state.note.currentNote,
   }),
   {
-    updateInputNote,
     fetchNotes,
-    saveNote,
+    newNote,
     selectNote,
     deleteNote,
   }
