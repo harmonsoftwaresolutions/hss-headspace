@@ -5,11 +5,12 @@ import {
   updateNote,
   destroyNote,
 } from '../lib/noteServices';
+import { onLoadEditorState } from './editor';
 import { showMessage } from './message';
 
-const initState = {
+const defaultState = {
   notes: [],
-  currentNote: { id: -1, editorState: {} },
+  currentNote: { id: -1 },
 };
 
 // ACTION CONSTANTS
@@ -17,7 +18,7 @@ export const NOTES_LOAD = 'NOTES_LOAD';
 export const NOTE_ADD = 'NOTE_ADD';
 export const NOTE_REPLACE = 'NOTE_REPLACE';
 export const NOTE_DELETE = 'NOTE_DELETE';
-const CURRENT_UPDATE = 'CURRENT_UPDATE';
+export const CURRENT_UPDATE = 'CURRENT_UPDATE';
 
 // ACTION CREATORS
 export const loadNotes = notes => ({ type: NOTES_LOAD, payload: notes });
@@ -49,8 +50,16 @@ export const saveNote = (id, editorState) => async dispatch => {
   return dispatch(replaceNote(note));
 };
 
-export const selectNote = ({ id }) => async dispatch => {
-  dispatch(updateCurrent(id));
+export const selectNote = id => async (dispatch, getState) => {
+  const state = getState() || [];
+  const notes =
+    state.note && state.note.notes && state.note.notes.length > 0
+      ? state.note.notes
+      : [];
+  notes.filter(n => n.id === id).map(n => {
+    dispatch(onLoadEditorState(n.content));
+    return dispatch(updateCurrent(n));
+  });
 };
 
 export const deleteNote = id => async dispatch => {
@@ -60,7 +69,7 @@ export const deleteNote = id => async dispatch => {
 };
 
 // REDUCER
-export default (state = initState, { type, payload }) => {
+export default (state = defaultState, { type, payload }) => {
   switch (type) {
     case NOTES_LOAD:
       return { ...state, notes: payload };
@@ -74,11 +83,7 @@ export default (state = initState, { type, payload }) => {
     case NOTE_DELETE:
       return { ...state, notes: state.notes.filter(n => n.id !== payload) };
     case CURRENT_UPDATE:
-      return {
-        ...state,
-        notes: state.notes.filter(n => n.id === payload),
-        currentNote: payload,
-      };
+      return { ...state, currentNote: payload };
     default:
       return state;
   }

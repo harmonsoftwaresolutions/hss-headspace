@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as fromNote from '../reducers/note';
 
-const NoteItem = ({ id, deleteNote, selectNote }) => (
+const NoteItem = ({ id, selectNote, deleteNote }) => (
   <li>
     <span className="delete-item">
       <button onClick={() => deleteNote(id)}>X</button>
@@ -22,4 +24,14 @@ NoteItem.defaultProps = {
   deleteNote: PropTypes.func,
 };
 
-export default NoteItem;
+// export default NoteItem;
+export default connect(
+  state => ({
+    notes: state.note.notes,
+    currentNote: state.note.currentNote,
+  }),
+  {
+    selectNote: fromNote.selectNote,
+    deleteNote: fromNote.deleteNote,
+  }
+)(NoteItem);

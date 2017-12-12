@@ -1,44 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Editor, EditorState } from 'draft-js';
-import { saveNote } from '../reducers/note';
+import { Editor } from 'draft-js';
+import * as fromNote from '../reducers/editor';
 
-const EditorWindow = ({ id, editorState }) => {
-  const readOnly = Object.keys(editorState).length === 0;
-  const state =
-    Object.keys(editorState).length === 0
-      ? EditorState.createEmpty()
-      : editorState;
-  return (
-    <div id="editor">
-      <Editor
-        editorState={state}
-        onChange={eState => saveNote(id, eState)}
-        readOnly={readOnly}
-      />
-    </div>
-  );
-};
+const EditorWindow = ({ editorState, onSaveEditorState }) => (
+  <div id="editor">
+    <Editor editorState={editorState} onChange={onSaveEditorState} />
+  </div>
+);
 
 EditorWindow.defaultProps = {
-  id: PropTypes.number,
   editorState: PropTypes.shape({}),
-  saveEditor: PropTypes.func,
+  onSaveEditorState: PropTypes.func,
 };
 
 EditorWindow.propTypes = {
-  id: PropTypes.number,
   editorState: PropTypes.shape({}),
-  saveEditor: PropTypes.func,
+  onSaveEditorState: PropTypes.func,
 };
 
 export default connect(
   state => ({
-    id: state.note.currentNote.id,
-    editorState: state.note.currentNote.editorState,
+    editorState: state.editor.editorState,
   }),
   {
-    saveNote,
+    onSaveEditorState: fromNote.onSaveEditorState,
   }
 )(EditorWindow);
