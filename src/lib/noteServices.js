@@ -5,27 +5,27 @@ export const getNotes = async () => {
   return res.json();
 };
 
-export const createNote = async title => {
+export const createNote = async content => {
   const res = await fetch(baseUrl, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ title, text: '' }),
+    body: JSON.stringify({ content }),
   });
 
   return res.json();
 };
 
-export const updateNote = async note => {
-  const res = await fetch(`${baseUrl}/${note.id}`, {
+export const updateNote = async (id, content) => {
+  const res = await fetch(`${baseUrl}/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(note),
+    body: JSON.stringify({ content }),
   });
 
   return res.json();
