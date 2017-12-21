@@ -2,22 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Editor } from 'draft-js';
-import * as fromNote from '../reducers/editor';
+import * as fromEditor from '../reducers/editor';
 
-const EditorWindow = ({ editorState, onSaveEditorState }) => (
+const EditorWindow = ({ editorState, saveEditor }) => (
   <div id="editor">
-    <Editor editorState={editorState} onChange={onSaveEditorState} />
+    <Editor editorState={editorState} onChange={saveEditor} />
   </div>
 );
 
 EditorWindow.defaultProps = {
   editorState: PropTypes.shape({}),
-  onSaveEditorState: PropTypes.func,
+  saveEditor: PropTypes.func,
 };
 
 EditorWindow.propTypes = {
   editorState: PropTypes.shape({}),
-  onSaveEditorState: PropTypes.func,
+  saveEditor: PropTypes.func,
 };
 
 export default connect(
@@ -25,6 +25,6 @@ export default connect(
     editorState: state.editor.editorState,
   }),
   {
-    onSaveEditorState: fromNote.onSaveEditorState,
+    saveEditor: fromEditor.saveEditor,
   }
 )(EditorWindow);

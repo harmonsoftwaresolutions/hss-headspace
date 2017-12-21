@@ -1,33 +1,52 @@
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 
-const defaultState = {
-  editorState: EditorState.createEmpty(),
+const baseUrl = process.env.REACT_APP_BASE_URL;
+
+const putNote = async (id, content) => {
+  const res = await fetch(`${baseUrl}/${id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ content }),
+  });
+
+  return res.json();
 };
 
-// ACTION CONSTANTS
-const EDITOR_UPDATE = 'EDITOR_UPDATE';
-
-// ACTION CREATORS
-const updateEditor = editorState => ({
-  type: EDITOR_UPDATE,
-  payload: editorState,
+export const UPDATE_EDITOR = 'UPDATE_EDITOR';
+export const updateEditor = editorState => ({
+  type: UPDATE_EDITOR,
+  editorState,
 });
 
-export const onLoadEditorState = raw => dispatch => {
-  const contentState = convertFromRaw(raw);
-  const editorState = EditorState.createWithContent(contentState);
+export const SAVE_EDITOR = 'SAVE_EDITOR';
+export const saveEditor = editorState => (dispatch, getState) => {
+  const state = getState();
+  const id = state.selected;
+  const contentState = editorState.getCurrentContent();
+  const raw = convertToRaw(contentState);
+  putNote(id, raw);
   dispatch(updateEditor(editorState));
 };
 
-export const onSaveEditorState = editorState => dispatch => {
+export const loadEditor = id => (dispatch, getState) => {
+  const state = getState();
+  const notes = state.note.items;
+  const item = notes.find(i => i.id === id);
+  const content = convertFromRaw(item.content);
+  const editorState = EditorState.createWithContent(content);
   dispatch(updateEditor(editorState));
 };
 
-// REDUCER
-export default (state = defaultState, { type, payload }) => {
-  switch (type) {
-    case EDITOR_UPDATE:
-      return { ...state, editorState: payload, readOnly: false };
+export default (
+  state = { editorState: EditorState.createEmpty(), readOnly: true },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_EDITOR:
+      return { ...state, editorState: action.editorState, readOnly: false };
     default:
       return state;
   }

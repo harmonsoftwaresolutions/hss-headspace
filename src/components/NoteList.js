@@ -1,58 +1,40 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchNotes, newNote, selectNote, deleteNote } from '../reducers/note';
+import * as fromNote from '../reducers/note';
 import NoteItem from './Note';
 
 class NoteList extends Component {
-  componentDidMount() {
-    this.props.fetchNotes();
+  async componentDidMount() {
+    await this.props.getNotes();
   }
 
   render() {
+    const { note } = this.props;
     return (
       <div>
-        <button onClick={() => this.props.newNote()}>+</button>
-        <ul>
-          {this.props.notes.map(note => (
-            <NoteItem
-              key={note.id}
-              selectNote={this.props.selectNote}
-              deleteNote={this.props.deleteNote}
-              {...note}
-            />
-          ))}
-        </ul>
+        <button>+</button>
+        <ul>{note.items.map(item => <NoteItem key={item.id} {...item} />)}</ul>
       </div>
     );
   }
 }
 
 NoteList.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object),
-  fetchNotes: PropTypes.func,
-  newNote: PropTypes.func,
-  selectNote: PropTypes.func,
-  deleteNote: PropTypes.func,
+  note: PropTypes.shape(),
+  getNotes: PropTypes.func,
 };
 
 NoteList.defaultProps = {
-  notes: PropTypes.arrayOf(PropTypes.object),
-  fetchNotes: PropTypes.func,
-  newNote: PropTypes.func,
-  selectNote: PropTypes.func,
-  deleteNote: PropTypes.func,
+  note: PropTypes.shape(),
+  getNotes: PropTypes.func,
 };
 
 export default connect(
   state => ({
-    notes: state.note.notes,
-    currentNote: state.note.currentNote,
+    note: state.note,
   }),
   {
-    fetchNotes,
-    newNote,
-    selectNote,
-    deleteNote,
+    getNotes: fromNote.getNotes,
   }
 )(NoteList);

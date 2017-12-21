@@ -1,37 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as fromNote from '../reducers/note';
+import * as fromSelection from '../reducers/selection';
 
-const NoteItem = ({ id, selectNote, deleteNote }) => (
+const NoteItem = ({ id, select }) => (
   <li>
     <span className="delete-item">
-      <button onClick={() => deleteNote(id)}>X</button>
+      <button>X</button>
     </span>
-    <button onClick={() => selectNote(id)}>{id}</button>
+    <button onClick={() => select(id)}>{id}</button>
   </li>
 );
 
 NoteItem.propTypes = {
   id: PropTypes.number,
-  selectNote: PropTypes.func,
-  deleteNote: PropTypes.func,
+  select: PropTypes.func,
 };
 
 NoteItem.defaultProps = {
   id: PropTypes.number,
-  selectNote: PropTypes.func,
-  deleteNote: PropTypes.func,
+  select: PropTypes.func,
 };
 
-// export default NoteItem;
-export default connect(
-  state => ({
-    notes: state.note.notes,
-    currentNote: state.note.currentNote,
-  }),
-  {
-    selectNote: fromNote.selectNote,
-    deleteNote: fromNote.deleteNote,
-  }
-)(NoteItem);
+export default connect(null, {
+  select: fromSelection.select,
+})(NoteItem);
