@@ -1,5 +1,3 @@
-import { loadEditor } from './editor';
-
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 // API CALLS
@@ -33,11 +31,14 @@ export const receiveNotes = notes => ({
   notes,
   receivedAt: Date.now(),
 });
+
+// GET NOTE FROM SERVER, UPDATE ITEMS STATE, DISPATCH
 export const getNote = id => async (dispatch, getState) => {
   const note = await fetchGetNote(id);
   const { content } = note;
   // return new set of items, update specific item content
   const state = getState();
+  // update single item
   const items = state.note.items.map(item => {
     if (item.id === id) {
       return note;
@@ -47,6 +48,7 @@ export const getNote = id => async (dispatch, getState) => {
   });
 
   dispatch(receiveNotes(items));
+  // can't call dispatch(loadEditor(content)) - dispatch won't be available
   return content;
 };
 
@@ -59,9 +61,6 @@ export const getAllNotes = () => async dispatch => {
   const notes = await fetchAllNotes();
   dispatch(receiveNotes(notes));
 };
-
-export const UPDATE_NOTE = 'UPDATE_NOTE';
-export const updateNote = rawText => ({ type: UPDATE_NOTE, rawText });
 
 export const INVALIDATE_NOTE = 'INVALIDATE_NOTE';
 export const invalidateNote = id => ({ type: INVALIDATE_NOTE, id });
