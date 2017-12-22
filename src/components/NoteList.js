@@ -6,7 +6,7 @@ import NoteItem from './Note';
 
 class NoteList extends Component {
   async componentDidMount() {
-    await this.props.getNotes();
+    await this.props.getAllNotes();
   }
 
   render() {
@@ -22,12 +22,12 @@ class NoteList extends Component {
 
 NoteList.propTypes = {
   note: PropTypes.shape(),
-  getNotes: PropTypes.func,
+  getAllNotes: PropTypes.func,
 };
 
 NoteList.defaultProps = {
   note: PropTypes.shape(),
-  getNotes: PropTypes.func,
+  getAllNotes: PropTypes.func,
 };
 
 export default connect(
@@ -35,6 +35,6 @@ export default connect(
     note: state.note,
   }),
   {
-    getNotes: fromNote.getNotes,
+    getAllNotes: fromNote.getAllNotes,
   }
 )(NoteList);
