@@ -1,33 +1,35 @@
-import { EditorState, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { putNote } from './note';
 
-const defaultState = {
-  editorState: EditorState.createEmpty(),
-};
-
-// ACTION CONSTANTS
-const EDITOR_UPDATE = 'EDITOR_UPDATE';
-
-// ACTION CREATORS
-const updateEditor = editorState => ({
-  type: EDITOR_UPDATE,
-  payload: editorState,
+export const UPDATE_EDITOR = 'UPDATE_EDITOR';
+export const updateEditor = editorState => ({
+  type: UPDATE_EDITOR,
+  editorState,
 });
 
-export const onLoadEditorState = raw => dispatch => {
-  const contentState = convertFromRaw(raw);
-  const editorState = EditorState.createWithContent(contentState);
+export const SAVE_EDITOR = 'SAVE_EDITOR';
+export const saveEditor = editorState => async (dispatch, getState) => {
+  const state = getState();
+  const id = state.selected;
+  const contentState = editorState.getCurrentContent();
+  const raw = convertToRaw(contentState);
+  await putNote(id, raw);
   dispatch(updateEditor(editorState));
 };
 
-export const onSaveEditorState = editorState => dispatch => {
+export const loadEditor = raw => dispatch => {
+  const content = convertFromRaw(raw);
+  const editorState = EditorState.createWithContent(content);
   dispatch(updateEditor(editorState));
 };
 
-// REDUCER
-export default (state = defaultState, { type, payload }) => {
-  switch (type) {
-    case EDITOR_UPDATE:
-      return { ...state, editorState: payload, readOnly: false };
+export default (
+  state = { editorState: EditorState.createEmpty(), readOnly: true },
+  action
+) => {
+  switch (action.type) {
+    case UPDATE_EDITOR:
+      return { ...state, editorState: action.editorState, readOnly: false };
     default:
       return state;
   }

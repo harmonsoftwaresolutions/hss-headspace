@@ -4,8 +4,9 @@ import thunk from 'redux-thunk';
 import note from './reducers/note';
 import message from './reducers/message';
 import editor from './reducers/editor';
+import selected from './reducers/selection';
 
-const reducer = combineReducers({ note, message, editor });
+const reducer = combineReducers({ note, message, editor, selected });
 
 export default createStore(
   reducer,
