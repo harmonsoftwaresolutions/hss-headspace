@@ -15,20 +15,28 @@
     "prettier": "^1.9.2"
   },
   "dependencies": {
+    "apollo-server-hapi": "^1.3.2",
+    "babel-cli": "^6.26.0",
     "concurrently": "^3.5.1",
     "draft-js": "^0.10.4",
     "font-awesome": "^4.7.0",
+    "graphql": "^0.12.3",
+    "graphql-tools": "^2.18.0",
+    "hapi": "^17.2.0",
     "json-server": "^0.12.1",
+    "node-fetch": "^1.7.3",
+    "nodemon": "^1.14.11",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "winston": "^3.0.0-rc1"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"yarn run dev\" \"yarn run dev-server\"",
+    "start": "concurrently --kill-others \"yarn run dev\" \"yarn run dev-server\" \"yarn run json-server\"",
     "prod": "json-server --static ./build db.json",
     "dev": "react-scripts start",
     "build": "react-scripts build",
@@ -36,7 +44,13 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "precommit": "lint-staged",
-    "dev-server": "json-server -p 8080 db.json"
+    "dev-server": "nodemon ./index.js --exec babel-node",
+    "json-server": "json-server -p 8080 db.json"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   },
   "lint-staged": {
     "*.js": [
