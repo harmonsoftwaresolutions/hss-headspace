@@ -15,19 +15,26 @@
     "prettier": "^1.9.2"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "^1.1.5",
+    "apollo-client": "^2.2.0",
+    "apollo-client-preset": "^1.0.6",
+    "apollo-link-http": "^1.3.2",
     "apollo-server-hapi": "^1.3.2",
     "babel-cli": "^6.26.0",
     "concurrently": "^3.5.1",
     "draft-js": "^0.10.4",
     "font-awesome": "^4.7.0",
     "graphql": "^0.12.3",
+    "graphql-tag": "^2.6.1",
     "graphql-tools": "^2.18.0",
+    "graphql-type-json": "^0.1.4",
     "hapi": "^17.2.0",
     "json-server": "^0.12.1",
     "node-fetch": "^1.7.3",
     "nodemon": "^1.14.11",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.17",
@@ -37,6 +44,7 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev\" \"yarn run dev-server\" \"yarn run json-server\"",
+    "debug": "concurrently --kill-others \"yarn run dev\" \"yarn run debug:dev-server\" \"yarn run json-server\"",
     "prod": "json-server --static ./build db.json",
     "dev": "react-scripts start",
     "build": "react-scripts build",
@@ -44,7 +52,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "precommit": "lint-staged",
-    "dev-server": "nodemon ./index.js --exec babel-node",
+    "dev-server": "nodemon ./server.js --exec babel-node",
+    "debug:dev-server": "nodemon --inspect ./server.js --exec babel-node",
     "json-server": "json-server -p 8080 db.json"
   },
   "babel": {
@@ -114,5 +123,5 @@
   "optionalDependencies": {
     "redux-devtools-extension": "^2.13.2"
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:4000"
 }

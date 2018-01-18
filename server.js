@@ -11,7 +11,7 @@ const logger = createLogger({
 });
 
 const Server = new Hapi.Server({
-  port: 3001,
+  port: 4000,
   host: 'localhost',
   routes: { log: { collect: true } },
 });
@@ -25,7 +25,7 @@ async function StartServer() {
       options: {
         path: '/graphql',
         graphqlOptions: { schema },
-        route: { cors: true },
+        // route: { cors: true },
       },
     },
     {

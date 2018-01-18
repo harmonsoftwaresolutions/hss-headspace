@@ -1,4 +1,5 @@
-// const baseUrl = process.env.REACT_APP_BASE_URL;
+import gql from 'graphql-tag';
+import client from '../apollo-client';
 
 export const INVALIDATE_NOTE = 'INVALIDATE_NOTE';
 export const invalidateNote = id => ({ type: INVALIDATE_NOTE, id });
@@ -16,8 +17,20 @@ export const receiveNotes = notes => ({
 });
 
 const fetchGetAllNotes = async () => {
-  const res = await fetch('/notes');
-  return res.json();
+  const res = await client.query({
+    query: gql`
+      {
+        notes {
+          id
+          content
+        }
+      }
+    `,
+  });
+  const { data } = res;
+  const { notes } = data;
+
+  return notes;
 };
 
 export const getAllNotes = () => async dispatch => {
@@ -29,8 +42,15 @@ export const getAllNotes = () => async dispatch => {
 // GET NOTE
 //
 const fetchGetNote = async id => {
-  const res = await fetch(`/notes/${id}`);
-  return res.json();
+  // const res = await fetch(`/notes/${id}`);
+  // return res.json();
+  const res = await client.query({
+    query: gql`{ note(id: ${id}) { id content } }`,
+  });
+  const { data } = res;
+  const { note } = data;
+
+  return note;
 };
 
 // GET NOTE FROM SERVER, UPDATE ITEMS STATE, DISPATCH
