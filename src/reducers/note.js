@@ -1,4 +1,4 @@
-const baseUrl = process.env.REACT_APP_BASE_URL;
+// const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const INVALIDATE_NOTE = 'INVALIDATE_NOTE';
 export const invalidateNote = id => ({ type: INVALIDATE_NOTE, id });
@@ -16,7 +16,7 @@ export const receiveNotes = notes => ({
 });
 
 const fetchGetAllNotes = async () => {
-  const res = await fetch(baseUrl);
+  const res = await fetch('/notes');
   return res.json();
 };
 
@@ -29,7 +29,7 @@ export const getAllNotes = () => async dispatch => {
 // GET NOTE
 //
 const fetchGetNote = async id => {
-  const res = await fetch(`${baseUrl}/${id}`);
+  const res = await fetch(`/notes/${id}`);
   return res.json();
 };
 
@@ -59,7 +59,7 @@ const ADD_NOTE = 'ADD_NOTE';
 const addNote = note => ({ type: ADD_NOTE, note });
 
 const fetchPostNote = async data => {
-  const res = await fetch(`${baseUrl}`, {
+  const res = await fetch('/notes', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -78,7 +78,7 @@ export const createNote = content => async dispatch => {
 // UPDATE NOTE
 //
 const fetchPutNote = async (id, data) => {
-  const res = await fetch(`${baseUrl}/${id}`, {
+  const res = await fetch(`/notes/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
