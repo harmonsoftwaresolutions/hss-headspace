@@ -1,5 +1,4 @@
 import gql from 'graphql-tag';
-// import GraphQLJSON from 'graphql-type-json';
 import client from '../apollo-client';
 
 export const INVALIDATE_NOTE = 'INVALIDATE_NOTE';
