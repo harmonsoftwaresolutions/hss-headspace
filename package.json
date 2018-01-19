@@ -45,12 +45,11 @@
   "scripts": {
     "start": "concurrently --kill-others \"yarn run dev\" \"yarn run dev-server\" \"yarn run json-server\"",
     "debug": "concurrently --kill-others \"yarn run dev\" \"yarn run debug:dev-server\" \"yarn run json-server\"",
-    "prod": "json-server --static ./build db.json",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src",
+    "lint": "eslint .",
     "precommit": "lint-staged",
     "dev-server": "nodemon ./server.js --exec babel-node",
     "debug:dev-server": "nodemon --inspect ./server.js --exec babel-node",
@@ -123,5 +122,8 @@
   "optionalDependencies": {
     "redux-devtools-extension": "^2.13.2"
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "nodemonConfig": {
+    "watch": ["server.js","server/"]
+  }
 }

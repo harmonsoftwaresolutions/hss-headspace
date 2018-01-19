@@ -2,8 +2,8 @@ import Hapi from 'hapi';
 import { createLogger, transports } from 'winston';
 import { graphqlHapi, graphiqlHapi } from 'apollo-server-hapi';
 import { makeExecutableSchema } from 'graphql-tools';
-import typeDefs from './typedefs';
-import resolvers from './resolvers';
+import typeDefs from './server/typedefs';
+import resolvers from './server/resolvers';
 
 const logger = createLogger({
   level: 'info',
