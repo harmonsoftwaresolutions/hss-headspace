@@ -6,5 +6,5 @@ I'm a consultant, software engineer, cloud architect, devops pro and I can't rem
 ## How to run in development mode with concurrently
 `yarn start`
 
-## How to run in production mode
-`yarn run prod`
+## Graphiql
+The graphiql query tool can be found at: `localhost:3001/graphiql`

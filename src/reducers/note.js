@@ -1,4 +1,5 @@
-const baseUrl = process.env.REACT_APP_BASE_URL;
+import gql from 'graphql-tag';
+import client from '../apollo-client';
 
 export const INVALIDATE_NOTE = 'INVALIDATE_NOTE';
 export const invalidateNote = id => ({ type: INVALIDATE_NOTE, id });
@@ -16,8 +17,20 @@ export const receiveNotes = notes => ({
 });
 
 const fetchGetAllNotes = async () => {
-  const res = await fetch(baseUrl);
-  return res.json();
+  const res = await client.query({
+    query: gql`
+      {
+        notes {
+          id
+          content
+        }
+      }
+    `,
+  });
+  const { data } = res;
+  const { notes } = data;
+
+  return notes;
 };
 
 export const getAllNotes = () => async dispatch => {
@@ -29,8 +42,20 @@ export const getAllNotes = () => async dispatch => {
 // GET NOTE
 //
 const fetchGetNote = async id => {
-  const res = await fetch(`${baseUrl}/${id}`);
-  return res.json();
+  const res = await client.query({
+    query: gql`
+      {
+        note(id: ${id}) {
+          id
+          content
+        }
+      }
+    `,
+  });
+  const { data } = res;
+  const { note } = data;
+
+  return note;
 };
 
 // GET NOTE FROM SERVER, UPDATE ITEMS STATE, DISPATCH
@@ -58,16 +83,22 @@ export const getNote = id => async (dispatch, getState) => {
 const ADD_NOTE = 'ADD_NOTE';
 const addNote = note => ({ type: ADD_NOTE, note });
 
-const fetchPostNote = async data => {
-  const res = await fetch(`${baseUrl}`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+const fetchPostNote = async content => {
+  const res = await client.mutate({
+    variables: { content },
+    mutation: gql`
+      mutation AddNote($content: JSON!) {
+        addNote(content: $content) {
+          id
+          content
+        }
+      }
+    `,
   });
-  return res.json();
+  const { data } = res;
+  const { addNote: note } = data;
+
+  return note;
 };
 
 export const createNote = content => async dispatch => {
@@ -77,17 +108,22 @@ export const createNote = content => async dispatch => {
 
 // UPDATE NOTE
 //
-const fetchPutNote = async (id, data) => {
-  const res = await fetch(`${baseUrl}/${id}`, {
-    method: 'PUT',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+const fetchPutNote = async (id, content) => {
+  const res = await client.mutate({
+    variables: { id, content },
+    mutation: gql`
+      mutation UpdateNote($id: ID!, $content: JSON!) {
+        updateNote(id: $id, content: $content) {
+          id
+          content
+        }
+      }
+    `,
   });
+  const { data } = res;
+  const { updateNote: note } = data;
 
-  return res.json();
+  return note;
 };
 
 export const putNote = async (id, content) => {
